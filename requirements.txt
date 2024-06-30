@@ -1,2 +1,2 @@
 streamlit
-joblib==1.4.2                                                           
+joblib                                                        
