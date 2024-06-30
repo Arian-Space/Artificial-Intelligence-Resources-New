@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import joblib
 
+st.set_page_config(page_title="Titanic survival algorithm", page_icon="🚢")
+
 st.title("🚢 Titanic survival algorithm 🚢")
 
 st.write(
