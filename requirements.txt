@@ -1,4 +1,5 @@
 streamlit
 joblib                       
 keras
-tensorflow                                                                 
+tensorflow                                                                
+scikit-learn  
