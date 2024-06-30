@@ -1,2 +1,4 @@
 streamlit
-joblib                                                        
+joblib                       
+keras
+tensorflow                                                                 
