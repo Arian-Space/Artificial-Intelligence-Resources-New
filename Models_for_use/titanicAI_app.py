@@ -7,6 +7,8 @@ st.set_page_config(page_title="Titanic survival algorithm", page_icon="🚢")
 
 st.title("🚢 Titanic survival algorithm 🚢")
 
+st.subheader("Made by: Arian Vazquez Fernandez")
+
 st.write(
     "Welcome to this website where you can use my artificial intelligence to predict survival on the Titanic"
 )
@@ -83,6 +85,8 @@ def testBotNewDatan(classChoosed,Sex,Age,SibSp=0,Parch=0):
 # # User variables
 
 st.header("Let's use the model")
+
+st.write("⚠️ After entering a data, you must press the (Enter) key, and do not use the (+) and (-) buttons in the numerical boxes too much, as it may cause problems when loading the new data in streamlib. ⚠️")
 
 optionClassPrediction = st.selectbox('Choose the class of the passenger:', ("First Class", "Second Class", "Third Class"))
 
