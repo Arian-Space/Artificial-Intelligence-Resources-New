@@ -9,7 +9,7 @@ import streamlit as st
 # ---------------------------------------------------------------------------------------------------
 
 # Cargar el dataset de Hugging Face
-dataset = load_dataset("dair-ai/emotion")
+dataset = load_dataset("dair-ai/emotion",trust_remote_code=True)
 
 # Mapa de emociones:
 # ['sadness', 'joy', 'love', 'anger', 'fear', 'surprise']
