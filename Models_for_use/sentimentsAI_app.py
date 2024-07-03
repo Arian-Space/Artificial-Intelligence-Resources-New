@@ -139,7 +139,7 @@ st.header("Let's use the model")
 
 st.write('⚠️ After you type something, you must press the (Ctrl) and (Enter) keys at the same time, this avoids errors with data loading in the streamlib application. 🤔')
 
-st.write('The model works better in English 🤓')
+st.write('The model works better if the text is in English 🤓')
 
 userText = st.text_area('Write something:')
 
