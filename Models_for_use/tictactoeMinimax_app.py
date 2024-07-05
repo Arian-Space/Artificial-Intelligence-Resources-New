@@ -14,12 +14,15 @@ st.header("Understanding the model")
 st.markdown("""
 - Depth of the decision tree: The depth of the decision tree is the is the prediction capacity of the model to analyze movements made by the player and artificial intelligence.
 - What happens in the depth 4?: Analyzing the future is a great power but you must know how to interpret that data, the model sees a future possibility in the game to win, but it cannot see other better possibilities in the nearby game.
+- ⚠️ If you are playing on a phone, play with the screen horizontal and not vertical to place the spaces correctly. ⚠️
 """)
 
 # Example data
 st.header("Let's use the model")
 
 levelOfFkup = st.number_input('Depth of the decision tree that AI predicts (max = 6):', min_value=1, max_value=6, value=1)
+
+st.write("Place your token on one of the buttons:")
 
 # Función para inicializar el tablero
 def initialize_board():
