@@ -38,7 +38,7 @@ def generate_latents(model, diffusion, prompt, batch_size=4):
     )
 
 def decode_and_render(xm, latents):
-    st.write("Decodificando y renderizando...")
+    st.write("Decoding and rendering...")
     render_mode = 'nerf'
     size = 64
 
@@ -77,7 +77,7 @@ def main():
         for i, img in enumerate(images):
             img_pil = Image.fromarray((img.cpu().numpy() * 255).astype('uint8'))
             with cols[i]:
-                st.image(img_pil, caption=f"Modelo {i+1}", use_column_width=True)
+                st.image(img_pil, caption=f"Model {i+1}", use_column_width=True)
 
 if __name__ == "__main__":
     main()
