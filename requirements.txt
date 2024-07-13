@@ -8,3 +8,4 @@ datasets
 torch
 Pillow
 https://github.com/openai/shap-e.git
+.
