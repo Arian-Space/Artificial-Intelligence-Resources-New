@@ -7,5 +7,6 @@ matplotlib
 datasets
 torch
 Pillow
-https://github.com/openai/shap-e.git
-.
+!git clone https://github.com/openai/shap-e
+%cd shap-e
+!pip install -e .
