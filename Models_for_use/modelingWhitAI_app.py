@@ -7,6 +7,18 @@ from shap_e.util.notebooks import create_pan_cameras, decode_latent_images
 from PIL import Image
 import numpy as np
 
+import os
+import subprocess
+
+# Clonar el repositorio
+subprocess.run(["git", "clone", "https://github.com/openai/shap-e"])
+
+# Cambiar al directorio del repositorio clonado
+os.chdir("shap-e")
+
+# Instalar el paquete
+subprocess.run(["pip", "install", "-e", "."])
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 @st.cache_resource
