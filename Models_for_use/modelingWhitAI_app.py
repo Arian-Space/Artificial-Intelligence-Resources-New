@@ -5,20 +5,20 @@ from shap_e.diffusion.gaussian_diffusion import diffusion_from_config
 from shap_e.models.download import load_model, load_config
 from shap_e.util.notebooks import create_pan_cameras, decode_latent_images
 from PIL import Image
-import io
+import numpy as np
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 @st.cache_resource
 def load_models():
-    st.write("Loading models...")
+    st.write("Cargando modelos...")
     xm = load_model('transmitter', device=device)
     model = load_model('text300M', device=device)
     diffusion = diffusion_from_config(load_config('diffusion'))
     return xm, model, diffusion
 
 def generate_latents(model, diffusion, prompt, batch_size=4):
-    st.write(f"Generating latents for: {prompt}")
+    st.write(f"Generando latents para: {prompt}")
     guidance_scale = 15.0
 
     return sample_latents(
@@ -38,7 +38,7 @@ def generate_latents(model, diffusion, prompt, batch_size=4):
     )
 
 def decode_and_render(xm, latents):
-    st.write("Decoding and rendering...")
+    st.write("Decodificando y renderizando...")
     render_mode = 'nerf'
     size = 64
 
@@ -46,38 +46,27 @@ def decode_and_render(xm, latents):
     all_images = []
     for latent in latents:
         images = decode_latent_images(xm, latent, cameras, rendering_mode=render_mode)
-        all_images.append(images[0])  # Tomamos solo el primer frame de cada GIF para simplificar
+        all_images.append(images[0].cpu().numpy())  # Tomamos solo el primer frame y lo convertimos a numpy array
     return all_images
 
 def main():
-    st.title("3D Model Generator using openai (shap-e)")
-
-    st.write("Citation and use:")
-
-    st.code("""
-        @misc{jun2023shape,
-            title={Shap-E: Generating Conditional 3D Implicit Functions}, 
-            author={Heewoo Jun and Alex Nichol},
-            year={2023},
-            eprint={2305.02463},
-            archivePrefix={arXiv},
-            primaryClass={cs.CV}
-        }
-        """)
+    st.title("Generador de Modelos 3D")
 
     xm, model, diffusion = load_models()
 
-    prompt = st.text_input("What do you want to model?", "a chair")
+    prompt = st.text_input("¿Qué quieres modelar?", "una silla")
 
-    if st.button("Generate"):
-        latents = generate_latents(model, diffusion, prompt, batch_size=4)
-        images = decode_and_render(xm, latents)
+    if st.button("Generar"):
+        with st.spinner("Generando modelos 3D..."):
+            latents = generate_latents(model, diffusion, prompt, batch_size=4)
+            images = decode_and_render(xm, latents)
 
         cols = st.columns(4)
         for i, img in enumerate(images):
-            img_pil = Image.fromarray((img.cpu().numpy() * 255).astype('uint8'))
+            img_normalized = (img * 255).astype(np.uint8)
+            img_pil = Image.fromarray(img_normalized)
             with cols[i]:
-                st.image(img_pil, caption=f"Model {i+1}", use_column_width=True)
+                st.image(img_pil, caption=f"Modelo {i+1}", use_column_width=True)
 
 if __name__ == "__main__":
     main()
