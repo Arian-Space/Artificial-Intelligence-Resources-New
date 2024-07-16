@@ -120,7 +120,7 @@ def main():
 
     show_solution = st.checkbox("Show solution")
 
-    st.write('⚠️ Remember to press the "New" button when changing the size or show solution of the maze. ⚠️')
+    st.write('⚠️ Remember to press the "New" button when changing the size of the maze. ⚠️')
 
     st.write('⚠️ Big mazes can take more time to generate and solve. ⚠️')
 
