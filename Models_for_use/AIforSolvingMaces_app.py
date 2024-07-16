@@ -129,6 +129,8 @@ def main():
 
     st.write(f"Maze size {maze_size}, renember to conect the green points.")
 
+    st.write(f"The path of the solution is in red, the cyan are for analyzing the performance of A*.")
+
     col1, col2, col3 = st.columns(3)
 
     with col1:
