@@ -7,5 +7,4 @@ matplotlib
 datasets
 torch
 Pillow
-warnings
 itertools
