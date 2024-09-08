@@ -8,3 +8,4 @@ datasets
 torch
 Pillow
 cv2
+pip install --upgrade pip
