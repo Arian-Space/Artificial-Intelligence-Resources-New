@@ -7,4 +7,3 @@ matplotlib
 datasets
 torch
 Pillow
-itertools
