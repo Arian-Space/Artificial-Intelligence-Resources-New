@@ -3,7 +3,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import load_model
 import streamlit as st
-import cv2
+from PIL import Image
 
 # Data base
 
@@ -18,9 +18,9 @@ def load_saved_model():
 # Function to preprocess the image
 def preprocess_image(image):
     # Convert to grayscale
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    image = image.convert('L')
     # Resize to 28x28
-    image = cv2.resize(image, (28, 28))
+    image = image.resize((28, 28))
     # Convert to numpy array and normalize
     image_array = np.array(image) / 255.0
     # Add dimensions to match the model input
@@ -52,9 +52,8 @@ def main():
     uploaded_file = st.file_uploader("Choose a clothing image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
-        # Read the image file
-        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-        image = cv2.imdecode(file_bytes, 1)
+        # Open the image file
+        image = Image.open(uploaded_file)
 
         # Preprocess the image
         processed_image = preprocess_image(image)
@@ -75,7 +74,7 @@ def main():
         st.write(f"Confidence: {prediction[0][class_index]*100:.2f}%")
 
         # Display the image
-        st.image(image, caption='Uploaded Image', use_column_width=True, channels="BGR")
+        st.image(image, caption='Uploaded Image', use_column_width=True)
 
 if __name__ == '__main__':
     main()

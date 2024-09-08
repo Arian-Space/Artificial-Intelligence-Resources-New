@@ -7,4 +7,3 @@ matplotlib
 datasets
 torch
 Pillow
-opencv-python>=4.5.5
