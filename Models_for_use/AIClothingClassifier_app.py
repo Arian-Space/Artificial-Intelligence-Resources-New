@@ -12,7 +12,7 @@ from PIL import Image
 def load_saved_model():
     
     # Models
-    modelEdnaModa = load_model("C:/Users/arian/OneDrive/Documentos/GitHub/Artificial-Intelligence-Resources-New/Download_Files/modelsUse/clothingModelAINew.keras") # Download_Files/modelsUse/clothingModelAI.keras
+    modelEdnaModa = load_model("Download_Files/modelsUse/clothingModelAINew.keras")
 
     # Return    
     return modelEdnaModa
@@ -36,15 +36,14 @@ def main():
 
     st.title('AI Clothing Classifier')
 
+    st.write('The accuracy of the AI, has been prove to be 89.22% ')
+
     # Widget to upload image
     uploaded_file = st.file_uploader("Choose a clothing image", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
         # Open the image
         image = Image.open(uploaded_file)
-        
-        # Display the image
-        st.image(image, caption='Uploaded Image', use_column_width=True)
 
         # Preprocess the image
         processed_image = preprocess_image(image)
@@ -63,6 +62,9 @@ def main():
         # Display the prediction
         st.write(f"The item in the image appears to be: {class_names[class_index]}")
         st.write(f"Confidence: {prediction[0][class_index]*100:.2f}%")
+
+        # Display the image
+        st.image(image, caption='Uploaded Image', use_column_width=True)
 
 if __name__ == '__main__':
     main()
