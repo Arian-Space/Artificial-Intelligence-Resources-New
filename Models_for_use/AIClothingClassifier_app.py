@@ -5,14 +5,14 @@ from tensorflow.keras.models import load_model
 import streamlit as st
 from PIL import Image
 
-# # Base de datos
+# # Data base
 
-# operation Github
+# Operation Github
 @st.cache_data
 def load_saved_model():
     
     # Models
-    modelEdnaModa = load_model("Download_Files/modelsUse/clothingModelAI.keras")
+    modelEdnaModa = load_model("C:/Users/arian/OneDrive/Documentos/GitHub/Artificial-Intelligence-Resources-New/Download_Files/modelsUse/clothingModelAINew.keras") # Download_Files/modelsUse/clothingModelAI.keras
 
     # Return    
     return modelEdnaModa
@@ -31,6 +31,9 @@ def preprocess_image(image):
 
 # Main Streamlit function
 def main():
+
+    st.set_page_config(page_title="AI Clothing Classifier", page_icon="👕")
+
     st.title('AI Clothing Classifier')
 
     # Widget to upload image
