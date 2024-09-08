@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.linear_model import Perceptron
-from itertools import product
 
 # Set page config
 st.set_page_config(page_title="Logic Gate Neurons", page_icon="🧠", layout="wide")
@@ -20,7 +19,12 @@ evolves with each generation.
 def plot_decision_boundary(classifier, gate_type, data, labels):
     x_values = np.linspace(-0.5, 1.5, 100)
     y_values = np.linspace(-0.5, 1.5, 100)
-    point_grid = list(product(x_values, y_values))
+    
+    # Create point grid without using itertools
+    point_grid = []
+    for x in x_values:
+        for y in y_values:
+            point_grid.append([x, y])
     
     distances = classifier.decision_function(point_grid)
     distances_matrix = np.reshape(distances, (100, 100))
