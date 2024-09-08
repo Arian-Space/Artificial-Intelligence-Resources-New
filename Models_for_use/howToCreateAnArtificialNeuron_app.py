@@ -96,12 +96,12 @@ else:
 # Button to advance to next generation
 if st.button("Advance to Next Generation"):
     update_generation()
-    st.experimental_rerun()
+    st.rerun()
 
 # Reset button
 if st.button("Reset to Generation 1"):
     st.session_state.generation = 1
-    st.experimental_rerun()
+    st.rerun()
 
 # Explanations
 st.subheader("Understanding the Visualization")
