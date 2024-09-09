@@ -17,7 +17,7 @@ st.write('''The database we will use is ["Mall Customer Segmentation Data"](http
 def load_data():
 
     # Our data
-    df = pd.read_csv("C:/Users/arian/OneDrive/Documentos/GitHub/Artificial-Intelligence-Resources-New/Download_Files/databaseUse/KMeanCustomerSegmentation.csv")
+    df = pd.read_csv("Download_Files/databaseUse/KMeanCustomerSegmentation.csv")
     
     # Delete "CustomerID" column
     df.drop(['CustomerID'], axis=1, inplace=True)
