@@ -24,7 +24,7 @@ env = RPSGame()
 
 # Create Q-learning agent
 class QLearningAgent:
-    def __init__(self, actions, agentName, learning_rate=0.001, discount_factor=0.95, exploration_prob=0.1, memory_size=1000, batch_size=32):
+    def __init__(self, actions, agentName, learning_rate=0.01, discount_factor=0.95, exploration_prob=0.1, memory_size=1000, batch_size=32):
         self.agentName = agentName
         self.actions = actions
         self.learning_rate = learning_rate
