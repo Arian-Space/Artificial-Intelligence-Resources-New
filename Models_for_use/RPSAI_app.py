@@ -101,9 +101,9 @@ if 'game_history' not in st.session_state:
 # Play against AI
 st.header("Play against AI")
 st.sidebar.header("What is the goal of the AI?")
-st.sidebar.write("""The idea in creating this experiment is to test the adaptability of artificial intelligence using 
+st.sidebar.markdown('''<div style="text-align: justify;">The idea in creating this experiment is to test the adaptability of artificial intelligence using 
                  the reinforcement method Deep-Q learning, an untrained AI learning the strategy used by the player, little 
-                 by little until it manages to adapt and win most of the time.""")
+                 by little until it manages to adapt and win most of the time.</div>''', unsafe_allow_html=True)
 player_move = st.radio("Choose your move:", ("Rock", "Paper", "Scissors"))
 
 if st.button("Play"):
