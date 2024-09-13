@@ -79,7 +79,6 @@ xml = """
   <sensor>
     <jointactuatorfrc name="right" joint="right"/>
     <jointactuatorfrc name="left" joint="left"/>
-    <velocimeter name="velocity" site="front wheel"/>
   </sensor>
 </mujoco>
 """
