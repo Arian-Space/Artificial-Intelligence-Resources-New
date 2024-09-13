@@ -1,66 +1,73 @@
 <mujoco>
   <compiler autolimits="true"/>
 
-  <option timestep="0.01" integrator="RK4"/>
-
   <asset>
-    <texture name="road" type="2d" builtin="checker" width="512" height="512" rgb1=".2 .3 .4" rgb2=".1 .2 .3"/>
-    <material name="road" texture="road" texrepeat="1 1" texuniform="true" reflectance=".2"/>
-    <material name="car" rgba="1 0 0 1"/>
-    <material name="wheel" rgba=".5 .5 1 1"/>
+    <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".1 .2 .3" rgb2=".2 .3 .4"/>
+    <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+    <mesh name="chasis" scale=".01 .006 .0015"
+      vertex=" 9   2   0
+              -10  10  10
+               9  -2   0
+               10  3  -10
+               10 -3  -10
+              -8   10 -10
+              -10 -10  10
+              -8  -10 -10
+              -5   0   20"/>
   </asset>
 
   <default>
     <joint damping=".03" actuatorfrcrange="-0.5 0.5"/>
     <default class="wheel">
-      <geom type="cylinder" size=".03 .01" material="wheel"/>
+      <geom type="cylinder" size=".03 .01" rgba=".5 .5 1 1"/>
+    </default>
+    <default class="decor">
+      <site type="box" rgba=".5 1 .5 1"/>
     </default>
   </default>
 
   <worldbody>
-    <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1"/>
-    <geom name="floor" type="plane" size="50 50 0.1" material="road" friction="1 0.005 0.0001"/>
-    <site name="target" pos="10 0 0.1" size="0.5 0.5 0.1" rgba="0 1 0 1" type="cylinder"/>
-    
+    <geom type="plane" size="3 3 .01" material="grid"/>
     <body name="car" pos="0 0 .03">
       <freejoint/>
       <light name="top light" pos="0 0 2" mode="trackcom" diffuse=".4 .4 .4"/>
-      <geom name="chassis" type="box" size="0.2 0.1 0.05" material="car"/>
+      <geom name="chasis" type="mesh" mesh="chasis"/>
       <geom name="front wheel" pos=".08 0 -.015" type="sphere" size=".015" condim="1" priority="1"/>
-      
-      <body name="left_front_wheel" pos="0.15 0.1 0" zaxis="0 1 0">
-        <joint name="left_front" type="hinge" axis="0 1 0"/>
+      <light name="front light" pos=".1 0 .02" dir="2 0 -1" diffuse="1 1 1"/>
+      <body name="left wheel" pos="-.07 .06 0" zaxis="0 1 0">
+        <joint name="left"/>
         <geom class="wheel"/>
+        <site class="decor" size=".006 .025 .012"/>
+        <site class="decor" size=".025 .006 .012"/>
       </body>
-      <body name="right_front_wheel" pos="0.15 -0.1 0" zaxis="0 1 0">
-        <joint name="right_front" type="hinge" axis="0 1 0"/>
+      <body name="right wheel" pos="-.07 -.06 0" zaxis="0 1 0">
+        <joint name="right"/>
         <geom class="wheel"/>
-      </body>
-      <body name="left_rear_wheel" pos="-0.15 0.1 0" zaxis="0 1 0">
-        <joint name="left_rear" type="hinge" axis="0 1 0"/>
-        <geom class="wheel"/>
-      </body>
-      <body name="right_rear_wheel" pos="-0.15 -0.1 0" zaxis="0 1 0">
-        <joint name="right_rear" type="hinge" axis="0 1 0"/>
-        <geom class="wheel"/>
+        <site class="decor" size=".006 .025 .012"/>
+        <site class="decor" size=".025 .006 .012"/>
       </body>
     </body>
   </worldbody>
 
   <tendon>
-    <fixed name="steering">
-      <joint joint="left_front" coef="1"/>
-      <joint joint="right_front" coef="1"/>
+    <fixed name="forward">
+      <joint joint="left" coef=".5"/>
+      <joint joint="right" coef=".5"/>
+    </fixed>
+    <fixed name="turn">
+      <joint joint="left" coef="-.5"/>
+      <joint joint="right" coef=".5"/>
     </fixed>
   </tendon>
 
   <actuator>
-    <motor name="forward" joint="left_rear" gear="30" ctrlrange="-1 1"/>
-    <motor name="steering" tendon="steering" ctrlrange="-1 1"/>
+    <motor name="forward" tendon="forward" ctrlrange="-1 1"/>
+    <motor name="turn" tendon="turn" ctrlrange="-1 1"/>
   </actuator>
 
   <sensor>
-    <velocimeter name="velocimeter" site="target"/>
-    <gyro name="gyro" site="target"/>
+    <jointactuatorfrc name="right" joint="right"/>
+    <jointactuatorfrc name="left" joint="left"/>
+    <velocimeter name="velocity" site="front wheel"/>
   </sensor>
 </mujoco>
