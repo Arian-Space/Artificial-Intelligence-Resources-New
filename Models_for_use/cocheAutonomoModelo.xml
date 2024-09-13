@@ -1,0 +1,27 @@
+<mujoco>
+  <option timestep="0.01" integrator="RK4"/>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512"/>
+    <texture name="road" type="2d" builtin="checker" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" width="512" height="512" mark="edge" markrgb="0.8 0.8 0.8"/>
+    <material name="road" texture="road" texrepeat="1 1" texuniform="true" reflectance="0.2"/>
+    <material name="car" rgba="1 0 0 1"/>
+    <material name="wheel" rgba="0.3 0.3 0.3 1"/>
+  </asset>
+  <worldbody>
+    <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1"/>
+    <geom name="floor" type="plane" size="50 50 0.1" material="road" friction="1 0.005 0.0001"/>
+    <site name="target" pos="10 0 0.1" size="0.5 0.5 0.1" rgba="0 1 0 1" type="cylinder"/>
+    <body name="car" pos="0 0 0.1">
+      <joint name="free" type="free"/>
+      <geom name="chassis" type="box" size="0.4 0.2 0.1" material="car"/>
+      <geom name="left_wheel1" type="cylinder" size="0.1 0.05" pos="-0.2 0.2 -0.1" euler="0 90 0" material="wheel"/>
+      <geom name="right_wheel1" type="cylinder" size="0.1 0.05" pos="-0.2 -0.2 -0.1" euler="0 90 0" material="wheel"/>
+      <geom name="left_wheel2" type="cylinder" size="0.1 0.05" pos="0.2 0.2 -0.1" euler="0 90 0" material="wheel"/>
+      <geom name="right_wheel2" type="cylinder" size="0.1 0.05" pos="0.2 -0.2 -0.1" euler="0 90 0" material="wheel"/>
+    </body>
+  </worldbody>
+  <actuator>
+    <motor joint="free" gear="0 0 0 0 0 1" name="steering" ctrlrange="-1 1"/>
+    <velocity joint="free" gear="1 0 0 0 0 0" name="velocity" ctrlrange="-1 1"/>
+  </actuator>
+</mujoco>
