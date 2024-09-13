@@ -7,7 +7,7 @@ from torch.distributions import Normal
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-# Modelo XML para el coche autónomo
+# Modelo XML mejorado para el coche autónomo
 xml = """
 <mujoco>
   <option timestep="0.01" integrator="RK4"/>
@@ -25,15 +25,31 @@ xml = """
     <body name="car" pos="0 0 0.1">
       <joint name="free" type="free"/>
       <geom name="chassis" type="box" size="0.4 0.2 0.1" material="car"/>
-      <geom name="left_wheel1" type="cylinder" size="0.1 0.05" pos="-0.2 0.2 -0.1" euler="0 90 0" material="wheel"/>
-      <geom name="right_wheel1" type="cylinder" size="0.1 0.05" pos="-0.2 -0.2 -0.1" euler="0 90 0" material="wheel"/>
-      <geom name="left_wheel2" type="cylinder" size="0.1 0.05" pos="0.2 0.2 -0.1" euler="0 90 0" material="wheel"/>
-      <geom name="right_wheel2" type="cylinder" size="0.1 0.05" pos="0.2 -0.2 -0.1" euler="0 90 0" material="wheel"/>
+      <body name="front_left_wheel" pos="0.3 0.25 0">
+        <joint name="front_left_axle" type="hinge" axis="0 1 0"/>
+        <joint name="front_left_steer" type="hinge" axis="0 0 1" limited="true" range="-0.5 0.5"/>
+        <geom type="cylinder" size="0.1 0.05" material="wheel" euler="1.57 0 0"/>
+      </body>
+      <body name="front_right_wheel" pos="0.3 -0.25 0">
+        <joint name="front_right_axle" type="hinge" axis="0 1 0"/>
+        <joint name="front_right_steer" type="hinge" axis="0 0 1" limited="true" range="-0.5 0.5"/>
+        <geom type="cylinder" size="0.1 0.05" material="wheel" euler="1.57 0 0"/>
+      </body>
+      <body name="rear_left_wheel" pos="-0.3 0.25 0">
+        <joint name="rear_left_axle" type="hinge" axis="0 1 0"/>
+        <geom type="cylinder" size="0.1 0.05" material="wheel" euler="1.57 0 0"/>
+      </body>
+      <body name="rear_right_wheel" pos="-0.3 -0.25 0">
+        <joint name="rear_right_axle" type="hinge" axis="0 1 0"/>
+        <geom type="cylinder" size="0.1 0.05" material="wheel" euler="1.57 0 0"/>
+      </body>
     </body>
   </worldbody>
   <actuator>
-    <motor joint="free" gear="0 0 0 0 0 1" name="steering" ctrlrange="-1 1"/>
-    <velocity joint="free" gear="1 0 0 0 0 0" name="velocity" ctrlrange="-1 1"/>
+    <motor joint="front_left_steer" name="steer_left" gear="1" ctrlrange="-1 1"/>
+    <motor joint="front_right_steer" name="steer_right" gear="1" ctrlrange="-1 1"/>
+    <velocity joint="rear_left_axle" name="velocity_left" gear="1" ctrlrange="-1 1"/>
+    <velocity joint="rear_right_axle" name="velocity_right" gear="1" ctrlrange="-1 1"/>
   </actuator>
 </mujoco>
 """
@@ -41,7 +57,7 @@ xml = """
 model = mujoco.MjModel.from_xml_string(xml)
 data = mujoco.MjData(model)
 
-action_dim = 2  # steering and velocity
+action_dim = 3  # steering, left velocity, right velocity
 
 class ActorCritic(nn.Module):
     def __init__(self, state_dim, action_dim):

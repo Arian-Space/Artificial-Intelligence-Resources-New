@@ -1,27 +1,66 @@
 <mujoco>
+  <compiler autolimits="true"/>
+
   <option timestep="0.01" integrator="RK4"/>
+
   <asset>
-    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="512"/>
-    <texture name="road" type="2d" builtin="checker" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" width="512" height="512" mark="edge" markrgb="0.8 0.8 0.8"/>
-    <material name="road" texture="road" texrepeat="1 1" texuniform="true" reflectance="0.2"/>
+    <texture name="road" type="2d" builtin="checker" width="512" height="512" rgb1=".2 .3 .4" rgb2=".1 .2 .3"/>
+    <material name="road" texture="road" texrepeat="1 1" texuniform="true" reflectance=".2"/>
     <material name="car" rgba="1 0 0 1"/>
-    <material name="wheel" rgba="0.3 0.3 0.3 1"/>
+    <material name="wheel" rgba=".5 .5 1 1"/>
   </asset>
+
+  <default>
+    <joint damping=".03" actuatorfrcrange="-0.5 0.5"/>
+    <default class="wheel">
+      <geom type="cylinder" size=".03 .01" material="wheel"/>
+    </default>
+  </default>
+
   <worldbody>
     <light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1"/>
     <geom name="floor" type="plane" size="50 50 0.1" material="road" friction="1 0.005 0.0001"/>
     <site name="target" pos="10 0 0.1" size="0.5 0.5 0.1" rgba="0 1 0 1" type="cylinder"/>
-    <body name="car" pos="0 0 0.1">
-      <joint name="free" type="free"/>
-      <geom name="chassis" type="box" size="0.4 0.2 0.1" material="car"/>
-      <geom name="left_wheel1" type="cylinder" size="0.1 0.05" pos="-0.2 0.2 -0.1" euler="0 90 0" material="wheel"/>
-      <geom name="right_wheel1" type="cylinder" size="0.1 0.05" pos="-0.2 -0.2 -0.1" euler="0 90 0" material="wheel"/>
-      <geom name="left_wheel2" type="cylinder" size="0.1 0.05" pos="0.2 0.2 -0.1" euler="0 90 0" material="wheel"/>
-      <geom name="right_wheel2" type="cylinder" size="0.1 0.05" pos="0.2 -0.2 -0.1" euler="0 90 0" material="wheel"/>
+    
+    <body name="car" pos="0 0 .03">
+      <freejoint/>
+      <light name="top light" pos="0 0 2" mode="trackcom" diffuse=".4 .4 .4"/>
+      <geom name="chassis" type="box" size="0.2 0.1 0.05" material="car"/>
+      <geom name="front wheel" pos=".08 0 -.015" type="sphere" size=".015" condim="1" priority="1"/>
+      
+      <body name="left_front_wheel" pos="0.15 0.1 0" zaxis="0 1 0">
+        <joint name="left_front" type="hinge" axis="0 1 0"/>
+        <geom class="wheel"/>
+      </body>
+      <body name="right_front_wheel" pos="0.15 -0.1 0" zaxis="0 1 0">
+        <joint name="right_front" type="hinge" axis="0 1 0"/>
+        <geom class="wheel"/>
+      </body>
+      <body name="left_rear_wheel" pos="-0.15 0.1 0" zaxis="0 1 0">
+        <joint name="left_rear" type="hinge" axis="0 1 0"/>
+        <geom class="wheel"/>
+      </body>
+      <body name="right_rear_wheel" pos="-0.15 -0.1 0" zaxis="0 1 0">
+        <joint name="right_rear" type="hinge" axis="0 1 0"/>
+        <geom class="wheel"/>
+      </body>
     </body>
   </worldbody>
+
+  <tendon>
+    <fixed name="steering">
+      <joint joint="left_front" coef="1"/>
+      <joint joint="right_front" coef="1"/>
+    </fixed>
+  </tendon>
+
   <actuator>
-    <motor joint="free" gear="0 0 0 0 0 1" name="steering" ctrlrange="-1 1"/>
-    <velocity joint="free" gear="1 0 0 0 0 0" name="velocity" ctrlrange="-1 1"/>
+    <motor name="forward" joint="left_rear" gear="30" ctrlrange="-1 1"/>
+    <motor name="steering" tendon="steering" ctrlrange="-1 1"/>
   </actuator>
+
+  <sensor>
+    <velocimeter name="velocimeter" site="target"/>
+    <gyro name="gyro" site="target"/>
+  </sensor>
 </mujoco>
