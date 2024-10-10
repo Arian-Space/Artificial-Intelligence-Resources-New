@@ -136,6 +136,7 @@ if 'board' not in st.session_state:
     st.session_state.board = initialize_board()
     st.session_state.current_player = 'X'
     st.session_state.winner = None
+    st.session_state.next_move = None
 
 # Mostrar el tablero
 def display_board(board):
@@ -147,7 +148,7 @@ def display_board(board):
             if cols[j].button(button_label, key=f"{i}-{j}"):
                 if st.session_state.winner is None and cell not in ["X", "O"]:
                     if select_space(st.session_state.board, int(cell), "X"):
-                        st.experimental_rerun()  # Esto forzará el ciclo de actualización inmediato
+                        st.session_state.next_move = "AI"
 
 # Verificar el estado del juego
 if game_is_over(st.session_state.board):
@@ -158,11 +159,17 @@ if game_is_over(st.session_state.board):
     else:
         st.session_state.winner = "Tie"
 else:
-    if st.session_state.current_player == "AI" and not st.session_state.winner:
+    if st.session_state.next_move == "AI":
         best_move = find_best_move(st.session_state.board, False, levelOfFkup)
         select_space(st.session_state.board, best_move, "O")
-        st.session_state.current_player = "X"
-        st.experimental_rerun()  # Rerun after AI's move
+        st.session_state.next_move = None
+        if game_is_over(st.session_state.board):
+            if has_won(st.session_state.board, "X"):
+                st.session_state.winner = "Player (X)"
+            elif has_won(st.session_state.board, "O"):
+                st.session_state.winner = "IA (O)"
+            else:
+                st.session_state.winner = "Tie"
 
 display_board(st.session_state.board)
 
@@ -174,4 +181,4 @@ if st.button("Restart Game"):
     st.session_state.board = initialize_board()
     st.session_state.current_player = 'X'
     st.session_state.winner = None
-    st.experimental_rerun()
+    st.session_state.next_move = None
