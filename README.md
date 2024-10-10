@@ -1,4 +1,4 @@
-# Artificial-Intelligence-Resources-New
+# Artificial Intelligence Resources New (About this repository)
 Welcome to the Artificial-Intelligence-Resources-New repository! This repository is dedicated to providing a comprehensive collection of resources related to Artificial Intelligence (AI) and the databases crucial for AI research and development. Whether you are a beginner looking to dive into the world of AI or an experienced practitioner seeking advanced datasets, this repository aims to be a valuable resource for you.
 
 # Logic Gate Neurons: Learning in Action
