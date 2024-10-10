@@ -1,7 +1,7 @@
 import streamlit as st
 from copy import deepcopy
 
-st.set_page_config(page_title="Tic-Tac-Toe game against an AI", page_icon="🎮")
+st.set_page_config(page_title="AI to predict feelings from text", page_icon="🎮")
 
 # Interfaz de usuario
 st.title("Tic-Tac-Toe game against an AI 🤖")
@@ -146,18 +146,10 @@ def display_board(board):
             button_label = cell if cell in ["X", "O"] else ""
             if cols[j].button(button_label, key=f"{i}-{j}"):
                 if st.session_state.winner is None and cell not in ["X", "O"]:
-                    # Jugador coloca su "X"
                     if select_space(st.session_state.board, int(cell), "X"):
-                        st.experimental_rerun()  # Volvemos a renderizar la interfaz tras mover la "X"
-
-                        # Verificar si el juego terminó tras el movimiento del jugador
                         if not game_is_over(st.session_state.board):
-                            # IA coloca su "O"
                             best_move = find_best_move(st.session_state.board, False, levelOfFkup)
                             select_space(st.session_state.board, best_move, "O")
-                            st.experimental_rerun()  # Volvemos a renderizar tras mover la "O"
-
-                        # Verificar si alguien ha ganado después del turno de la IA
                         if game_is_over(st.session_state.board):
                             if has_won(st.session_state.board, "X"):
                                 st.session_state.winner = "Player (X)"
@@ -165,7 +157,6 @@ def display_board(board):
                                 st.session_state.winner = "IA (O)"
                             else:
                                 st.session_state.winner = "Tie"
-                            st.experimental_rerun()
 
 # Verificar el estado del juego
 if game_is_over(st.session_state.board):
@@ -186,4 +177,3 @@ if st.button("Restart Game"):
     st.session_state.board = initialize_board()
     st.session_state.current_player = 'X'
     st.session_state.winner = None
-    st.experimental_rerun()
