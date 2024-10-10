@@ -1,7 +1,7 @@
 import streamlit as st
 from copy import deepcopy
 
-st.set_page_config(page_title="AI to predict feelings from text", page_icon="🎮")
+st.set_page_config(page_title="Tic-Tac-Toe game against an AI", page_icon="🎮")
 
 # Interfaz de usuario
 st.title("Tic-Tac-Toe game against an AI 🤖")
@@ -146,25 +146,26 @@ def display_board(board):
             button_label = cell if cell in ["X", "O"] else ""
             if cols[j].button(button_label, key=f"{i}-{j}"):
                 if st.session_state.winner is None and cell not in ["X", "O"]:
-                    # Primero coloca la jugada del jugador
+                    # Jugador coloca su "X"
                     if select_space(st.session_state.board, int(cell), "X"):
-                        # Actualizamos el tablero después de la jugada
-                        st.experimental_rerun()
-                        
-                    # Si el juego no ha terminado, juega la IA
-                    if not game_is_over(st.session_state.board):
-                        best_move = find_best_move(st.session_state.board, False, levelOfFkup)
-                        select_space(st.session_state.board, best_move, "O")
-                        st.experimental_rerun()
-                    
-                    # Si el juego ha terminado, mostramos el resultado
-                    if game_is_over(st.session_state.board):
-                        if has_won(st.session_state.board, "X"):
-                            st.session_state.winner = "Player (X)"
-                        elif has_won(st.session_state.board, "O"):
-                            st.session_state.winner = "IA (O)"
-                        else:
-                            st.session_state.winner = "Tie"
+                        st.experimental_rerun()  # Volvemos a renderizar la interfaz tras mover la "X"
+
+                        # Verificar si el juego terminó tras el movimiento del jugador
+                        if not game_is_over(st.session_state.board):
+                            # IA coloca su "O"
+                            best_move = find_best_move(st.session_state.board, False, levelOfFkup)
+                            select_space(st.session_state.board, best_move, "O")
+                            st.experimental_rerun()  # Volvemos a renderizar tras mover la "O"
+
+                        # Verificar si alguien ha ganado después del turno de la IA
+                        if game_is_over(st.session_state.board):
+                            if has_won(st.session_state.board, "X"):
+                                st.session_state.winner = "Player (X)"
+                            elif has_won(st.session_state.board, "O"):
+                                st.session_state.winner = "IA (O)"
+                            else:
+                                st.session_state.winner = "Tie"
+                            st.experimental_rerun()
 
 # Verificar el estado del juego
 if game_is_over(st.session_state.board):
