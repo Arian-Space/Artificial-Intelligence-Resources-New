@@ -157,7 +157,6 @@ def display_board(board):
                                 st.session_state.winner = "IA (O)"
                             else:
                                 st.session_state.winner = "Tie"
-                        st.rerun()
 
 # Verificar el estado del juego
 if game_is_over(st.session_state.board):
@@ -178,4 +177,3 @@ if st.button("Restart Game"):
     st.session_state.board = initialize_board()
     st.session_state.current_player = 'X'
     st.session_state.winner = None
-    st.rerun()
