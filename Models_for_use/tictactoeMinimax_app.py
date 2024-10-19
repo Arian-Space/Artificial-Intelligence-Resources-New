@@ -96,9 +96,6 @@ st.set_page_config(page_title="Tic-Tac-Toe with Minimax and Alpha-Beta Pruning",
 st.title("Tic-Tac-Toe with Minimax and Alpha-Beta Pruning")
 st.subheader("Made by: Arian Vazquez")
 
-# Mensaje explicativo para el usuario
-st.write("**Note:** You may need to click the buttons twice for the movement to register or to restart the game.")
-
 # Selección de la dificultad
 dificultad = st.selectbox("Select the difficulty:", ["Easy", "Medium", "Hard"])
 
