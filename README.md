@@ -1,13 +1,6 @@
 # Artificial Intelligence Resources New (About this repository)
 Welcome to the Artificial-Intelligence-Resources-New repository! This repository is dedicated to providing a comprehensive collection of resources related to Artificial Intelligence (AI) and the databases crucial for AI research and development. Whether you are a beginner looking to dive into the world of AI or an experienced practitioner seeking advanced datasets, this repository aims to be a valuable resource for you.
 
-# Logic Gate Neurons: Learning in Action
-In this project, I used Python to create a simple artificial neural network, focusing on perceptrons, to simulate basic logic gates such as AND, OR, and XOR. The perceptron is the simplest type of neural network, with a single layer of neurons that perform binary classification based on a linear decision boundary.
-
-The project aimed to demonstrate how perceptrons can be trained to mimic the behavior of these gates by adjusting their weights and bias through a supervised learning algorithm. For each gate, I defined input and expected output pairs, then trained the perceptron to learn the correct mapping. The perceptron successfully learned the AND, OR gates, showcasing its ability to model linearly separable problems.
-
-However, a key part of the project was exploring the limitations of the perceptron. While it can easily simulate simple logic gates, it fails to model the XOR gate due to the non-linearly separable nature of its output. This led to a discussion on the need for multi-layer networks (such as multi-layer perceptrons or deep neural networks) to handle more complex decision boundaries.
-
 # Adaptive Rock Paper Scissors Game against AI using Deep Q-Learning
 This project focuses on building an intelligent agent capable of playing and adapting to the classic game of Rock Paper Scissors in real-time using Deep Q-Learning, a reinforcement learning technique. The goal was to create an AI that could not only play against a human opponent but also learn and adjust its strategy based on the player's behavior over time.
 
@@ -26,15 +19,6 @@ By leveraging state-of-the-art NLP techniques and transfer learning, the AI proc
 
 The project demonstrates the effectiveness of using multi-class classification with specialized models for complex tasks like emotion detection, offering potential applications in sentiment analysis, mental health monitoring, and customer feedback analysis.
 
-# Maze Generator and Solver (using A*)
-In this project, I developed a maze generation and solving application that employs the A* search algorithm to find optimal paths within generated mazes. The primary objective was to showcase the application of pathfinding algorithms in a gaming context while providing users with an interactive experience.
-
-The application begins by dynamically generating a maze using a randomized algorithm, ensuring that each maze is unique and presents different challenges. Once the maze is created, the user has the option to visualize the maze-solving process. By implementing the A* algorithm, the program intelligently explores potential paths from the start to the goal point, considering both the cost of the path and heuristic estimates of distance to the goal.
-
-As the algorithm processes, it displays the exploration of nodes, allowing users to see how the A* algorithm evaluates and chooses the best path. When the solution is found, the program highlights the route taken, providing a clear visual representation of the optimal path through the maze.
-
-This project effectively illustrates the principles of search algorithms and their applications in game design, enhancing user engagement through visualization and interaction. It also serves as a foundation for exploring more complex pathfinding techniques and maze generation algorithms.
-
 # Customer Segmentation Tool with K-means
 In this project, I developed a Customer Segmentation Tool utilizing the K-means clustering algorithm to analyze and categorize customers based on their purchasing behavior. The primary goal was to demonstrate how unsupervised learning techniques can simplify complex problems and uncover valuable insights from customer data.
 
@@ -44,7 +28,23 @@ To provide a comprehensive understanding of the results, I created two detailed 
 
 This project effectively illustrates the power of K-means clustering in customer analysis and demonstrates how unsupervised models can simplify complex datasets into actionable insights, enabling businesses to make data-driven decisions.
 
-# Generador de Sudoku
+# Logic Gate Neurons: Learning in Action
+In this project, I used Python to create a simple artificial neural network, focusing on perceptrons, to simulate basic logic gates such as AND, OR, and XOR. The perceptron is the simplest type of neural network, with a single layer of neurons that perform binary classification based on a linear decision boundary.
+
+The project aimed to demonstrate how perceptrons can be trained to mimic the behavior of these gates by adjusting their weights and bias through a supervised learning algorithm. For each gate, I defined input and expected output pairs, then trained the perceptron to learn the correct mapping. The perceptron successfully learned the AND, OR gates, showcasing its ability to model linearly separable problems.
+
+However, a key part of the project was exploring the limitations of the perceptron. While it can easily simulate simple logic gates, it fails to model the XOR gate due to the non-linearly separable nature of its output. This led to a discussion on the need for multi-layer networks (such as multi-layer perceptrons or deep neural networks) to handle more complex decision boundaries.
+
+# Maze Generator and Solver (using A*)
+In this project, I developed a maze generation and solving application that employs the A* search algorithm to find optimal paths within generated mazes. The primary objective was to showcase the application of pathfinding algorithms in a gaming context while providing users with an interactive experience.
+
+The application begins by dynamically generating a maze using a randomized algorithm, ensuring that each maze is unique and presents different challenges. Once the maze is created, the user has the option to visualize the maze-solving process. By implementing the A* algorithm, the program intelligently explores potential paths from the start to the goal point, considering both the cost of the path and heuristic estimates of distance to the goal.
+
+As the algorithm processes, it displays the exploration of nodes, allowing users to see how the A* algorithm evaluates and chooses the best path. When the solution is found, the program highlights the route taken, providing a clear visual representation of the optimal path through the maze.
+
+This project effectively illustrates the principles of search algorithms and their applications in game design, enhancing user engagement through visualization and interaction. It also serves as a foundation for exploring more complex pathfinding techniques and maze generation algorithms.
+
+# Sudoku Generator
 In this project, I developed a Sudoku Generator that creates fully functional Sudoku puzzles of varying difficulty levels. The primary goal was to showcase algorithmic problem-solving techniques and provide users with a fun and engaging way to enjoy this classic game.
 
 The generator utilizes a backtracking algorithm, a depth-first search technique that systematically fills the Sudoku grid while adhering to the game's rules. This ensures that each generated puzzle has a unique solution. After creating the complete Sudoku grid, the generator removes a predetermined number of cells based on the desired difficulty level, creating a challenging yet solvable puzzle for players.
@@ -52,6 +52,15 @@ The generator utilizes a backtracking algorithm, a depth-first search technique 
 To enhance user experience, the application features an intuitive interface that allows users to select the difficulty level and generate new puzzles at the click of a button. Additionally, users can check their solutions against the correct answers, ensuring an enjoyable and educational experience as they work through the puzzles.
 
 This project effectively demonstrates the principles of algorithm design and implementation, while providing a practical application of programming concepts in creating interactive games.
+
+# Tic-Tac-Toe with Minimax and Alpha-Beta Pruning
+In this project, I used Python and Streamlit to create an interactive Tic-Tac-Toe game where an AI opponent is implemented using the Minimax algorithm with alpha-beta pruning. The goal of the project was to demonstrate how these techniques can be applied to decision-making in a classic game setting, showcasing the AI's ability to make optimal moves while minimizing the number of calculations needed.
+
+The Minimax algorithm is a decision rule used for minimizing the possible loss for a worst-case scenario. In the context of Tic-Tac-Toe, it allows the AI to evaluate potential moves by simulating all possible game outcomes and choosing the path that maximizes its chances of winning while minimizing the opponent's chances. The algorithm recursively explores all potential moves up to a certain depth, which is determined by the selected difficulty level.
+
+To improve efficiency, alpha-beta pruning was incorporated. This optimization technique reduces the number of nodes that are evaluated in the Minimax algorithm by "pruning" branches of the decision tree that are guaranteed not to affect the final decision. By comparing the current best option (alpha) and worst-case scenario for the opponent (beta), branches that cannot possibly improve the outcome are skipped. This significantly reduces the number of hypothetical moves the AI needs to consider, especially in higher difficulty settings, making the algorithm more efficient without sacrificing accuracy.
+
+The project allows players to choose different difficulty levels, with the AI adjusting the search depth accordingly. This ensures that even on lower levels, the AI still presents a challenge without overwhelming the player. The implementation highlights the practical use of game theory algorithms and optimization techniques to create intelligent, real-time decision-making systems in games.
 
 # Titanic survival algorithm
 In this project, I developed a predictive model to analyze the survival rates of passengers on the Titanic using Logistic Regression, a powerful statistical method for binary classification. The primary aim was to demonstrate the algorithm's capacity for categorization by predicting whether a passenger survived or not based on various features.
