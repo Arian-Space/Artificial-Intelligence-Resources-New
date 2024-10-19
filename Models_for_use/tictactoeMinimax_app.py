@@ -25,8 +25,8 @@ def verificar_ganador(tablero):
     
     return None
 
-# Implementación del algoritmo Minimax con límite de profundidad
-def minimax(tablero, profundidad, es_maximizador, limite_profundidad):
+# Implementación del algoritmo Minimax con poda alfa-beta
+def minimax(tablero, profundidad, es_maximizador, limite_profundidad, alpha, beta):
     ganador = verificar_ganador(tablero)
     if ganador == "X":
         return -10 + profundidad
@@ -45,9 +45,12 @@ def minimax(tablero, profundidad, es_maximizador, limite_profundidad):
             for j in range(3):
                 if tablero[i, j] == "":
                     tablero[i, j] = "O"
-                    valor = minimax(tablero, profundidad + 1, False, limite_profundidad)
+                    valor = minimax(tablero, profundidad + 1, False, limite_profundidad, alpha, beta)
                     tablero[i, j] = ""
                     mejor_valor = max(mejor_valor, valor)
+                    alpha = max(alpha, valor)
+                    if beta <= alpha:
+                        break  # Poda beta
         return mejor_valor
     else:
         mejor_valor = np.inf
@@ -55,24 +58,30 @@ def minimax(tablero, profundidad, es_maximizador, limite_profundidad):
             for j in range(3):
                 if tablero[i, j] == "":
                     tablero[i, j] = "X"
-                    valor = minimax(tablero, profundidad + 1, True, limite_profundidad)
+                    valor = minimax(tablero, profundidad + 1, True, limite_profundidad, alpha, beta)
                     tablero[i, j] = ""
                     mejor_valor = min(mejor_valor, valor)
+                    beta = min(beta, valor)
+                    if beta <= alpha:
+                        break  # Poda alfa
         return mejor_valor
 
-# IA elige el mejor movimiento
+# IA elige el mejor movimiento usando minimax con poda alfa-beta
 def mejor_movimiento(tablero, limite_profundidad):
     mejor_valor = -np.inf
     movimiento = None
+    alpha = -np.inf
+    beta = np.inf
     for i in range(3):
         for j in range(3):
             if tablero[i, j] == "":
                 tablero[i, j] = "O"
-                valor = minimax(tablero, 0, False, limite_profundidad)
+                valor = minimax(tablero, 0, False, limite_profundidad, alpha, beta)
                 tablero[i, j] = ""
                 if valor > mejor_valor:
                     mejor_valor = valor
                     movimiento = (i, j)
+                alpha = max(alpha, valor)
     return movimiento
 
 # Inicializar el tablero en Streamlit
@@ -83,12 +92,12 @@ if "tablero" not in st.session_state:
     st.session_state.dificultad = 3  # Dificultad por defecto "Medio"
 
 # Mostrar el título y el subheader
-st.set_page_config(page_title="Tic-Tac-Toe with Minimax", page_icon="💻", layout="wide")
-st.title("Tic-Tac-Toe with Minimax")
+st.set_page_config(page_title="Tic-Tac-Toe with Minimax and Alpha-Beta Pruning", page_icon="💻", layout="wide")
+st.title("Tic-Tac-Toe with Minimax and Alpha-Beta Pruning")
 st.subheader("Made by: Arian Vazquez")
 
 # Mensaje explicativo para el usuario
-# st.write("**Note:** You may need to click the buttons twice for the movement to register or to restart the game.") Solved?
+st.write("**Note:** You may need to click the buttons twice for the movement to register or to restart the game.")
 
 # Selección de la dificultad
 dificultad = st.selectbox("Select the difficulty:", ["Easy", "Medium", "Hard"])
